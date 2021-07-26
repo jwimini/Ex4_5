@@ -1,7 +1,9 @@
 package ks.hs.emirim.wlalsdl_04.ex4_5;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,16 +36,27 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 edtItem.setText("");
             }
-        });
-        list1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        }); list1.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                arrList.remove(position);
-                adapter.notifyDataSetChanged();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("삭제여부확인");
+                dialog.setIcon(R.drawable.t);
+                dialog.setMessage("정말로 삭제하시겠습니까?");
+                dialog.setPositiveButton(" 삭제", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        arrList.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                dialog.setNegativeButton("취소",null);
+                dialog.show();
                 return false;
             }
         });
     }
+
 
 
 }
